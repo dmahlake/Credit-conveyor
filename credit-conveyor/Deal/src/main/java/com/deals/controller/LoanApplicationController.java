@@ -28,7 +28,7 @@ public class LoanApplicationController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("calculate/{applicationId}")
+    @PutMapping("/calculate/{applicationId}")
     public ResponseEntity<?> dealCalculation(@RequestBody ScoringDataDTO scoringDataDTO, @PathVariable(value = "applicationId") Long applicationId)
     {
         dealServices.calculateLoan(scoringDataDTO, applicationId);
