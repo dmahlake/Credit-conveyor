@@ -1,12 +1,8 @@
 package com.deals.service;
 
 import com.deals.customEnum.CreditStatus;
-import com.deals.customEnum.Passport;
 import com.deals.customEnum.Status;
-import com.deals.dto.CreditDTO;
-import com.deals.dto.LoanApplicationRequestDTO;
-import com.deals.dto.LoanOfferDTO;
-import com.deals.dto.ScoringDataDTO;
+import com.deals.dto.*;
 import com.deals.exception.DataNotFoundException;
 import com.deals.feignClient.ClientSide;
 import com.deals.persistance.model.Application;
@@ -15,37 +11,39 @@ import com.deals.persistance.model.Credit;
 import com.deals.persistance.repisitory.ApplicationRepo;
 import com.deals.persistance.repisitory.ClientRepo;
 import com.deals.persistance.repisitory.CreditRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DealServices {
 
-    @Autowired
-    private ClientRepo clientRepo;
+    private final ClientRepo clientRepo;
+
+    private final ApplicationRepo applicationRepo;
 
     @Autowired
-    ApplicationRepo applicationRepo;
+    private final ClientSide clientSide;
 
     @Autowired
-    private  ClientSide clientSide;
-
-    @Autowired
-    CreditRepo creditRepo;
+    private final CreditRepo creditRepo;
 
 
     private Client saveClientApplication(LoanApplicationRequestDTO requestDTO)
     {
         Client client = new Client();
 
+
         client.setFirstName(requestDTO.getFirstName());
         client.setLastName(requestDTO.getLastName());
         client.setMiddleName(requestDTO.getMiddleName());
         client.setEmail(requestDTO.getEmail());
         client.setDateOfBirth(requestDTO.getBirthdate());
-        client.setPassport(Passport.valueOf(requestDTO.getPassportNumber()));
+        client.setPassport(new Passport(requestDTO.getPassportSeries(),
+                requestDTO.getPassportNumber()));
 
         return clientRepo.save(client);
     }
@@ -101,7 +99,10 @@ public class DealServices {
         scoringDataDTO.setLastName(client.getLastName());
         scoringDataDTO.setMiddleName(client.getMiddleName());
         scoringDataDTO.setBirthdate(client.getDateOfBirth());
-        scoringDataDTO.setPassportNumber(client.getPassport().toString());
+        scoringDataDTO.setPassportNumber(client.getPassport().getNumber());
+        scoringDataDTO.setPassportSeries(client.getPassport().getSeries());
+        scoringDataDTO.setPassportIssueBranch(client.getPassport().getIssueBranch());
+        scoringDataDTO.setPassportIssueDate(client.getPassport().getIssueDate());
         scoringDataDTO.setIsInsuranceEnabled(appliedOffer.getIsInsuranceEnabled());
         scoringDataDTO.setIsSalaryClient(appliedOffer.getIsSalaryClient());
 

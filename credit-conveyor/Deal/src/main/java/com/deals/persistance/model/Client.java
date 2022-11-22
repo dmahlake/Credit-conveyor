@@ -2,6 +2,7 @@ package com.deals.persistance.model;
 
 
 import com.deals.customEnum.*;
+import com.deals.dto.Passport;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

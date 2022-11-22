@@ -4,15 +4,16 @@ import com.deals.dto.LoanApplicationRequestDTO;
 import com.deals.dto.LoanOfferDTO;
 import com.deals.dto.ScoringDataDTO;
 import com.deals.service.DealServices;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/deal")
+@RequiredArgsConstructor
 public class LoanApplicationController {
 
-    @Autowired
-    DealServices dealServices;
+    private final DealServices dealServices;
 
     @PostMapping("/application")
    public ResponseEntity<?> createLoanApplication(@RequestBody LoanApplicationRequestDTO requestDTO)

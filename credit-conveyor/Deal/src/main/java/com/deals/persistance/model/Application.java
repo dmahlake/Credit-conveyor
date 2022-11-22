@@ -24,7 +24,6 @@ public class Application {
     private String creditId;
     private Status status;
     private LocalDate creationDate;
-    //private String appliedOffer;
     private LocalDate signDate;
     private Integer sesCode;
     private String statusHistory;
