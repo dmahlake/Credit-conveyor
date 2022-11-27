@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="20220325" author="Dipuo Mahlake">
+        <createTable tableName="application">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="status" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sign_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ses_code" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status_history" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sign_date" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="applied_offer" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="credit_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="client">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="last_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middle_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_of_birth" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="marital_status" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dependent_number" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="passport" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employment" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employer" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salary" type="BigDecimal">
+                <constraints nullable="false"/>
+            </column>
+            <column name="position" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="work_experience_total" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="work_experience_current" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="credit_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="application_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+
+        <createTable tableName="credit">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="amount" type="BigDecimal">
+                <constraints nullable="false"/>
+            </column>
+            <column name="term" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="monthly_payment" type="BigDecimal">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rate" type="BigDecimal">
+                <constraints nullable="false"/>
+            </column>
+            <column name="flc" type="BigDecimal">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_schedule" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_insurance_enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_salary_client" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="credit_status" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="work_experience_current" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="application_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+
+        <addAutoIncrement tableName="application" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1" />
+        <addAutoIncrement tableName="client" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1" />
+        <addAutoIncrement tableName="credit" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1" />
+        <createSequence sequenceName="hibernate_sequence" incrementBy="1" startValue="1" />
+        <addForeignKeyConstraint baseTableName="application" baseColumnNames="id" constraintName="client_id" referencedTableName="client" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="application" baseColumnNames="id" constraintName="credit_id" referencedTableName="credit" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="client" baseColumnNames="id" constraintName="application_id" referencedTableName="application" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="client" baseColumnNames="id" constraintName="credit_id" referencedTableName="credit" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="credit" baseColumnNames="id" constraintName="application_id" referencedTableName="application" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="credit" baseColumnNames="id" constraintName="client_id" referencedTableName="client" referencedColumnNames="id" />
+    </changeSet>
+</databaseChangeLog>
