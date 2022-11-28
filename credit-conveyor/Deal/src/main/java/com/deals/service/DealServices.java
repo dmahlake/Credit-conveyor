@@ -25,10 +25,7 @@ public class DealServices {
 
     private final ApplicationRepo applicationRepo;
 
-    @Autowired
     private final ClientSide clientSide;
-
-    @Autowired
     private final CreditRepo creditRepo;
 
 
@@ -51,7 +48,7 @@ public class DealServices {
     public void offerDeals(LoanOfferDTO request)
     {
         Application application = applicationRepo.findById(request.getApplicationId())
-                .orElseThrow(()-> new DataNotFoundException("Sorry such application is doesn't exist in our database"
+                .orElseThrow(()-> new DataNotFoundException("Sorry such application doesn't exist in our database"
                         + request.getApplicationId()));
         updateStatusHistory(application, Status.APPROVED);
 
